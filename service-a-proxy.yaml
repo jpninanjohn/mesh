@@ -1,7 +1,7 @@
 admin:
   access_log_path: "/tmp/admin_access.log"
-  address: 
-    socket_address: 
+  address:
+    socket_address:
       address: "127.0.0.1"
       port_value: 9901
 static_resources:
@@ -30,12 +30,16 @@ static_resources:
                             cluster: "service_a"
                 http_filters:
                   - name: "envoy.router"
+  # Todo: add a listener that forwards calls to service b
+
   clusters:
-      - name: "service_a"
-        connect_timeout: "5s"
-        type: "strict_dns"
-        lb_policy: "ROUND_ROBIN"
-        hosts:
-          - socket_address:
-              address: "service_a"
-              port_value: 8081
+    - name: "service_a"
+      connect_timeout: "0.25s"
+      type: "strict_dns"
+      lb_policy: "ROUND_ROBIN"
+      hosts:
+        - socket_address:
+            address: "service_a"
+            port_value: 8081
+
+# Todo: Cluster config to forward to service b
