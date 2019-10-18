@@ -1,0 +1,22 @@
+version: '3'
+services:
+  front-envoy:
+    image: envoyproxy/envoy-alpine-dev:latest
+    volumes:
+      - ./front-proxy.yaml:/etc/envoy-config.yaml
+    ports:
+      - "10000:10000"
+      - "9901:9901"
+    command: "/usr/local/bin/envoy -c /etc/envoy-config.yaml --service-cluster 'front-envoy' --service-node 'front-envoy' --log-format '[METADATA][%Y-%m-%d %T.%e][%t][%l][%n] %v'"
+
+  service_a_envoy:
+    image: envoyproxy/envoy-alpine:v1.7.0
+    volumes:
+      - ./service-a-proxy.yaml:/etc/envoy-config.yaml
+    ports:
+      # Todo: Add ports that are to be exposed here
+    command: "/usr/local/bin/envoy -c /etc/envoy-config.yaml --service-cluster 'service-a' --service-node 'service-a' --log-format '[METADATA][%Y-%m-%d %T.%e][%t][%l][%n] %v'"
+
+  service_a:
+    build: service_a/
+    
