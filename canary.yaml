@@ -1,0 +1,20 @@
+apiVersion: flagger.app/v1alpha3
+kind: Canary
+metadata:
+  name: service-b
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: service-b
+  service:
+    port: 80
+    targetPort: 8080
+  canaryAnalysis:
+    interval: 10s
+    threshold: 5
+    stepWeight: 40
+    metrics:
+    - name: request-success-rate
+      threshold: 99
+      interval: 1m
