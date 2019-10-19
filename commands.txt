@@ -1,0 +1,2 @@
+docker run --name proxy -d -p 80:10000 -v $(pwd)/envoy_proxy_sample.yaml:/etc/envoy/envoy.yaml envoyproxy/envoy:latest
+
