@@ -10,8 +10,6 @@ import (
 
 func handler(w http.ResponseWriter, r *http.Request) {
 
-	_, _ = fmt.Fprintf(w, "Calling Service B\n")
-
 	invokeServiceB(w, r)
 	invokeDobby(w, r)
 	_, _ = fmt.Fprintf(w, "\nHello from service A\n")
@@ -19,6 +17,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 func invokeServiceB(w http.ResponseWriter, r *http.Request) {
 	// Call service B
+	_, _ = fmt.Fprintf(w, "Calling Service B\n")
 	req, err := http.NewRequest("GET", "http://service-b/", nil)
 	if err != nil {
 		fmt.Printf("%s", err)
@@ -55,6 +54,7 @@ func invokeServiceB(w http.ResponseWriter, r *http.Request) {
 
 func invokeDobby(w http.ResponseWriter, r *http.Request) {
 	// Call dobby service
+	_, _ = fmt.Fprintf(w, "Calling Dobby Service\n")
 	req, err := http.NewRequest("GET", "http://dobby/health", nil)
 	if err != nil {
 		fmt.Printf("%s", err)
@@ -79,6 +79,7 @@ func invokeDobby(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	_, _ = fmt.Fprintf(w, "status code from dobby: %d\n", resp.StatusCode)
 	defer resp.Body.Close()
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
@@ -86,7 +87,7 @@ func invokeDobby(w http.ResponseWriter, r *http.Request) {
 		_, _ = fmt.Fprintf(w, "error reading response: %s\n", err.Error())
 		return
 	}
-	_, _ = fmt.Fprintf(w, string(body))
+	_, _ = fmt.Fprintf(w, "response from dobby: %s", string(body))
 }
 
 func main() {

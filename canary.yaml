@@ -13,7 +13,7 @@ spec:
   canaryAnalysis:
     interval: 10s
     threshold: 5
-    stepWeight: 40
+    stepWeight: 10
     metrics:
     - name: request-success-rate
       threshold: 99
