@@ -1,0 +1,18 @@
+apiVersion: linkerd.io/v1alpha2
+kind: ServiceProfile
+metadata:
+  creationTimestamp: null
+  name: dobby.demo.svc.cluster.local
+  namespace: demo
+spec:
+  routes:
+  - condition:
+      method: GET
+      pathRegex: /health
+    name: GET /health
+    timeout: 5ms
+    isRetryable: false
+  retryBudget:
+    retryRatio: 0.8
+    minRetriesPerSecond: 10
+    ttl: 10s
